@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Clock, DollarSign, Filter, Star, Upload, X, FileText, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { parseSkills, getStoredUser } from '../utils/helpers';
+import { API } from '../config';
 
 const FreelancerDashboard = () => {
     const navigate = useNavigate();
@@ -32,12 +33,12 @@ const FreelancerDashboard = () => {
         const fetchData = async () => {
             try {
                 // Fetch all jobs with match percentage if freelancer logged in
-                const baseUrl = 'http://localhost:8080/api/jobs/all';
+                const baseUrl = `${API}/api/jobs/all`;
                 const jobsRes = await fetch(user.userId ? `${baseUrl}?freelancerId=${user.userId}` : baseUrl);
                 const jobsData = await jobsRes.json();
 
                 // Fetch freelancer's applications to filter out already applied jobs
-                const appsRes = await fetch(`http://localhost:8080/api/applications/freelancer/${user.userId}`);
+                const appsRes = await fetch(`${API}/api/applications/freelancer/${user.userId}`);
                 const appsData = await appsRes.json();
 
                 const appliedJobIds = new Set(Array.isArray(appsData) ? appsData.map(app => app.jobId) : []);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { API } from '../config';
 
 const Settings = () => {
     // Get user data from localStorage
@@ -20,11 +21,11 @@ const Settings = () => {
         const role = user.role?.toUpperCase();
 
         if (role === 'CLIENT') {
-            endpoint = `http://localhost:8080/api/clients/${user.userId}`;
+            endpoint = `${API}/api/clients/${user.userId}`;
         } else if (role === 'FREELANCER') {
-            endpoint = `http://localhost:8080/api/freelancers/${user.userId}`;
+            endpoint = `${API}/api/freelancers/${user.userId}`;
         } else if (role === 'ADMIN') {
-            endpoint = `http://localhost:8080/api/admin/profile/${user.userId}`;
+            endpoint = `${API}/api/admin/profile/${user.userId}`;
         }
 
         if (!endpoint || !user.userId) {

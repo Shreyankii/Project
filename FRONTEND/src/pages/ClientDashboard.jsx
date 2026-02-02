@@ -7,6 +7,7 @@ import {
     Plus
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { API } from '../config';
 
 const ClientDashboard = () => {
     const navigate = useNavigate();
@@ -23,9 +24,9 @@ const ClientDashboard = () => {
         const fetchData = async () => {
             try {
                 const [statsRes, activityRes, projectsRes] = await Promise.all([
-                    fetch(`http://localhost:8080/api/clients/${user.userId}/stats`),
-                    fetch(`http://localhost:8080/api/clients/${user.userId}/recent-activity`),
-                    fetch(`http://localhost:8080/api/clients/${user.userId}/active-projects`)
+                    fetch(`${API}/api/clients/${user.userId}/stats`),
+                    fetch(`${API}/api/clients/${user.userId}/recent-activity`),
+                    fetch(`${API}/api/clients/${user.userId}/active-projects`)
                 ]);
 
                 const stats = statsRes.ok ? await statsRes.json() : { activeJobs: 0, unreadMessages: 0, avgRating: 5.0 };

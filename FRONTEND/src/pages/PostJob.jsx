@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload, X, Calendar, DollarSign, Briefcase, FileText } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { API } from '../config';
 
 const PostJob = () => {
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ const PostJob = () => {
 
     const fetchJobDetails = async () => {
         try {
-            const res = await fetch(`http://localhost:8080/api/jobs/${editJobId}`);
+            const res = await fetch(`${API}/api/jobs/${editJobId}`);
             if (res.ok) {
                 const data = await res.json();
                 const isCustomCategory = !categories.includes(data.category) && data.category !== 'Other';
@@ -117,8 +118,8 @@ const PostJob = () => {
         setIsPosting(true);
         try {
             const url = isEditMode
-                ? `http://localhost:8080/api/jobs/${editJobId}`
-                : 'http://localhost:8080/api/jobs/post';
+                ? `${API}/api/jobs/${editJobId}`
+                : `${API}/api/jobs/post`;
 
             const method = isEditMode ? 'PUT' : 'POST';
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API } from '../config';
 
 const DashboardContext = createContext();
 
@@ -12,7 +13,7 @@ export const DashboardProvider = ({ children }) => {
 
     useEffect(() => {
         if (!user.userId || !user.role) return;
-        fetch(`http://localhost:8080/api/notifications/${user.userId}?role=${user.role}`)
+        fetch(`${API}/api/notifications/${user.userId}?role=${user.role}`)
             .then(res => res.ok ? res.json() : [])
             .then(data => {
                 if (!Array.isArray(data)) return;
@@ -39,7 +40,7 @@ export const DashboardProvider = ({ children }) => {
 
     const markAllAsRead = () => {
         if (!user.userId || !user.role) return;
-        fetch(`http://localhost:8080/api/notifications/${user.userId}/mark-read?role=${user.role}`, {
+        fetch(`${API}/api/notifications/${user.userId}/mark-read?role=${user.role}`, {
             method: 'POST'
         })
             .then(() => {
@@ -49,7 +50,7 @@ export const DashboardProvider = ({ children }) => {
     };
 
     const markAsRead = (id) => {
-        fetch(`http://localhost:8080/api/notifications/${id}/read`, {
+        fetch(`${API}/api/notifications/${id}/read`, {
             method: 'POST'
         })
             .then(() => {

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MoreVertical, Filter, Eye, Edit, Trash2, StopCircle, Check } from 'lucide-react';
+import { API } from '../config';
 import { useNavigate } from 'react-router-dom';
 
 const MyJobs = () => {
@@ -10,7 +11,7 @@ const MyJobs = () => {
 
     useEffect(() => {
         if (!user.userId) return;
-        fetch(`http://localhost:8080/api/jobs/client/${user.userId}`)
+        fetch(`${API}/api/jobs/client/${user.userId}`)
             .then(res => res.json())
             .then(data => {
                 setJobs(data);
@@ -50,7 +51,7 @@ const MyJobs = () => {
         }
 
         try {
-            const res = await fetch(`http://localhost:8080/api/jobs/${jobId}/close`, {
+            const res = await fetch(`${API}/api/jobs/${jobId}/close`, {
                 method: 'PATCH'
             });
 

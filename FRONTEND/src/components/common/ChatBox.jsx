@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, User, MessageCircle } from 'lucide-react';
+import { API } from '../../config';
 
 const ChatBox = ({ jobId, currentUser }) => {
     const [messages, setMessages] = useState([]);
@@ -9,7 +10,7 @@ const ChatBox = ({ jobId, currentUser }) => {
 
     const fetchMessages = async () => {
         try {
-            const res = await fetch(`http://localhost:8080/api/messages/job/${jobId}`);
+            const res = await fetch(`${API}/api/messages/job/${jobId}`);
             if (res.ok) {
                 const data = await res.json();
                 setMessages(data);
@@ -47,7 +48,7 @@ const ChatBox = ({ jobId, currentUser }) => {
         };
 
         try {
-            const res = await fetch('http://localhost:8080/api/messages/send', {
+            const res = await fetch(`${API}/api/messages/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(messageData)
@@ -84,8 +85,8 @@ const ChatBox = ({ jobId, currentUser }) => {
                         return (
                             <div key={msg.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[80%] rounded-2xl px-4 py-2 shadow-sm ${isMine
-                                        ? 'bg-blue-600 text-white rounded-tr-none'
-                                        : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none'
+                                    ? 'bg-blue-600 text-white rounded-tr-none'
+                                    : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none'
                                     }`}>
                                     <div className={`text-[10px] font-bold uppercase mb-1 ${isMine ? 'text-blue-100' : 'text-gray-400'}`}>
                                         {msg.senderRole}

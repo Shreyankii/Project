@@ -6,6 +6,7 @@ import {
     Edit3, Globe, Code, Clock, ArrowLeft, Plus, Trash2, FileText
 } from 'lucide-react';
 import { getStoredUser } from '../utils/helpers';
+import { API } from '../config';
 import ProfileEditModal from '../components/common/ProfileEditModal';
 import AddProjectModal from '../components/common/AddProjectModal';
 import AddCertificationModal from '../components/common/AddCertificationModal';
@@ -32,7 +33,7 @@ const Profile = () => {
 
     const fetchProfile = async (targetId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/freelancers/${targetId}/profile`);
+            const response = await fetch(`${API}/api/freelancers/${targetId}/profile`);
             if (!response.ok) throw new Error('Failed to fetch profile');
             const data = await response.json();
             setProfile(data);
@@ -47,8 +48,8 @@ const Profile = () => {
     const handleAddProject = async (projectData) => {
         try {
             const url = editingProject
-                ? `http://localhost:8080/api/freelancers/${profile.id}/projects/${editingProject.id}`
-                : `http://localhost:8080/api/freelancers/${profile.id}/projects`;
+                ? `${API}/api/freelancers/${profile.id}/projects/${editingProject.id}`
+                : `${API}/api/freelancers/${profile.id}/projects`;
 
             const method = editingProject ? 'PUT' : 'POST';
 
@@ -70,7 +71,7 @@ const Profile = () => {
 
     const handleSaveSkills = async (newSkills) => {
         try {
-            const res = await fetch(`http://localhost:8080/api/freelancers/${profile.id}`, {
+            const res = await fetch(`${API}/api/freelancers/${profile.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ skills: newSkills })
@@ -86,7 +87,7 @@ const Profile = () => {
     const handleDeleteProject = async (projectId) => {
         if (!window.confirm("Are you sure you want to delete this project?")) return;
         try {
-            const res = await fetch(`http://localhost:8080/api/freelancers/${profile.id}/projects/${projectId}`, {
+            const res = await fetch(`${API}/api/freelancers/${profile.id}/projects/${projectId}`, {
                 method: 'DELETE'
             });
             if (res.ok) fetchProfile(profile.id || user.userId);
@@ -99,7 +100,7 @@ const Profile = () => {
 
     const handleAddCertification = async (certData) => {
         try {
-            const res = await fetch(`http://localhost:8080/api/freelancers/${profile.id}/certifications`, {
+            const res = await fetch(`${API}/api/freelancers/${profile.id}/certifications`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(certData)
@@ -115,7 +116,7 @@ const Profile = () => {
     const handleDeleteCertification = async (certId) => {
         if (!window.confirm("Are you sure you want to delete this certification?")) return;
         try {
-            const res = await fetch(`http://localhost:8080/api/freelancers/${profile.id}/certifications/${certId}`, {
+            const res = await fetch(`${API}/api/freelancers/${profile.id}/certifications/${certId}`, {
                 method: 'DELETE'
             });
             if (res.ok) fetchProfile(profile.id || user.userId);

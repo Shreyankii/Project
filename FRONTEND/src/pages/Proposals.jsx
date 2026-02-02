@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API } from '../config';
 import { useNavigate } from 'react-router-dom';
 import {
     Clock,
@@ -20,7 +21,7 @@ const Proposals = () => {
     useEffect(() => {
         if (!user.userId) return;
 
-        fetch(`http://localhost:8080/api/applications/freelancer/${user.userId}`)
+        fetch(`${API}/api/applications/freelancer/${user.userId}`)
             .then(res => res.json())
             .then(data => {
                 setProposals(data);

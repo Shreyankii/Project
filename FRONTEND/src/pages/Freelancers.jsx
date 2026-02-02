@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Star, MapPin } from 'lucide-react';
+import { API } from '../config';
 
 const Freelancers = () => {
     const [freelancers, setFreelancers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
-        fetch('http://localhost:8080/api/freelancers/all')
+        fetch(`${API}/api/freelancers/all`)
             .then(res => res.json())
             .then(data => {
                 setFreelancers(data);

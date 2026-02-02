@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, ChevronLeft, Upload, Plus, X, Briefcase, GraduationCap, Code, Trash2 } from 'lucide-react';
+import { API } from '../config';
 
 const FreelancerOnboarding = () => {
     const navigate = useNavigate();
@@ -79,7 +80,7 @@ const FreelancerOnboarding = () => {
         };
 
         try {
-            const res = await fetch('http://localhost:8080/api/freelancers/onboarding', {
+            const res = await fetch(`${API}/api/freelancers/onboarding`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(finalData)
@@ -155,7 +156,7 @@ const FreelancerOnboarding = () => {
         uploadData.append('file', file);
 
         try {
-            const res = await fetch('http://localhost:8080/api/upload/file', {
+            const res = await fetch(`${API}/api/upload/file`, {
                 method: 'POST',
                 body: uploadData
             });

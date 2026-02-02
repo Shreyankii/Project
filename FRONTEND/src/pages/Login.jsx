@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Briefcase, ArrowRight } from 'lucide-react';
 import Button from '../components/common/Button';
+import { API } from '../config';
 import Card from '../components/common/Card';
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
         const identifier = form.querySelector('input[type="text"]').value.toLowerCase();
         const password = form.querySelector('input[type="password"]').value;
 
-        fetch('http://localhost:8080/api/auth/login', {
+        fetch(`${API}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: identifier, password: password })

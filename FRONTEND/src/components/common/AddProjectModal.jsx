@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Save, Briefcase, Link as LinkIcon, Upload, Trash2 } from 'lucide-react';
+import { API } from '../../config';
 
 const AddProjectModal = ({ isOpen, onClose, onSave, initialData, title: modalTitle }) => {
     const [formData, setFormData] = useState(initialData || {
@@ -40,7 +41,7 @@ const AddProjectModal = ({ isOpen, onClose, onSave, initialData, title: modalTit
         uploadData.append('file', file);
 
         try {
-            const res = await fetch('http://localhost:8080/api/jobs/upload', { // Reuse upload endpoint
+            const res = await fetch(`${API}/api/jobs/upload`, { // Reuse upload endpoint
                 method: 'POST',
                 body: uploadData
             });

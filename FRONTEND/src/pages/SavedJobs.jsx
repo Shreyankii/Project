@@ -6,6 +6,7 @@ import {
     Trash2, AlertCircle
 } from 'lucide-react';
 import { getStoredUser, parseSkills } from '../utils/helpers';
+import { API } from '../config';
 
 const SavedJobs = () => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const SavedJobs = () => {
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const res = await fetch('http://localhost:8080/api/jobs/all');
+                const res = await fetch(`${API}/api/jobs/all`);
                 const data = await res.json();
                 if (Array.isArray(data)) {
                     // Filter for jobs that are in the saved list

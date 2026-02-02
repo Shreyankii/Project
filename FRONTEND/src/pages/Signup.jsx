@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { User, Briefcase, Mail, Lock, UserCircle, ArrowRight, CheckCircle } from 'lucide-react';
 import Button from '../components/common/Button';
 import Card from '../components/common/Card';
+import { API } from '../config';
 
 const Signup = () => {
     const [role, setRole] = useState('client'); // 'client' or 'freelancer'
@@ -32,7 +33,7 @@ const Signup = () => {
             return;
         }
 
-        fetch('http://localhost:8080/api/auth/signup', {
+        fetch(`${API}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -60,7 +61,7 @@ const Signup = () => {
     const handleVerifyOtp = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:8080/api/auth/verify-otp', {
+        fetch(`${API}/api/auth/verify-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

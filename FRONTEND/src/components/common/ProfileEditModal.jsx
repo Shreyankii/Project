@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Camera, Save, Lock, User, Mail } from 'lucide-react';
+import { API } from '../../config';
 
 const ProfileEditModal = ({ isOpen, onClose, userType, userData }) => {
     const [formData, setFormData] = useState({
@@ -57,7 +58,7 @@ const ProfileEditModal = ({ isOpen, onClose, userType, userData }) => {
 
         try {
             // Updated to the generic upload endpoint
-            const res = await fetch('http://localhost:8080/api/upload/file', {
+            const res = await fetch(`${API}/api/upload/file`, {
                 method: 'POST',
                 body: uploadData
             });
@@ -87,8 +88,8 @@ const ProfileEditModal = ({ isOpen, onClose, userType, userData }) => {
         setIsSaving(true);
         try {
             const endpoint = userType === 'client'
-                ? `http://localhost:8080/api/clients/${userData.id}`
-                : `http://localhost:8080/api/freelancers/${userData.id}`;
+                ? `${API}/api/clients/${userData.id}`
+                : `${API}/api/freelancers/${userData.id}`;
 
             const res = await fetch(endpoint, {
                 method: 'PUT', // Using PUT as per controller

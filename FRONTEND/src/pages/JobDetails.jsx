@@ -14,6 +14,7 @@ import {
     Briefcase
 } from 'lucide-react';
 import ChatBox from '../components/common/ChatBox';
+import { API } from '../config';
 import { useNavigate, useParams } from 'react-router-dom';
 import { parseSkills, calculateMatch, getStoredUser } from '../utils/helpers';
 
@@ -40,7 +41,7 @@ const JobDetails = ({ isClientView }) => {
         const fetchJobData = async () => {
             try {
                 // Fetch job with freelancerId to get match percentage and DTO fields
-                const url = `http://localhost:8080/api/jobs/${id}${user.userId ? `?freelancerId=${user.userId}` : ''}`;
+                const url = `${API}/api/jobs/${id}${user.userId ? `?freelancerId=${user.userId}` : ''}`;
                 const jobRes = await fetch(url);
                 if (!jobRes.ok) throw new Error("Job not found");
                 const jobData = await jobRes.json();
@@ -51,13 +52,13 @@ const JobDetails = ({ isClientView }) => {
 
                 // If freelancer, fetch their profile too for local match breakdown
                 if (isFreelancer && user.userId) {
-                    const fRes = await fetch(`http://localhost:8080/api/freelancers/${user.userId}`);
+                    const fRes = await fetch(`${API}/api/freelancers/${user.userId}`);
                     if (fRes.ok) {
                         setFreelancerProfile(await fRes.json());
                     }
                 }
 
-                const appRes = await fetch(`http://localhost:8080/api/applications/job/${id}`);
+                const appRes = await fetch(`${API}/api/applications/job/${id}`);
                 if (appRes.ok) {
                     const appData = await appRes.json();
                     setProposals(Array.isArray(appData) ? appData : []);
@@ -89,7 +90,7 @@ const JobDetails = ({ isClientView }) => {
 
     const handleUpdateStatus = async (appId, newStatus) => {
         try {
-            const res = await fetch(`http://localhost:8080/api/applications/${appId}/status?status=${newStatus}`, {
+            const res = await fetch(`${API}/api/applications/${appId}/status?status=${newStatus}`, {
                 method: 'POST'
             });
             if (res.ok) {
@@ -183,7 +184,7 @@ const JobDetails = ({ isClientView }) => {
             return;
         }
         try {
-            const res = await fetch('http://localhost:8080/api/applications/apply', {
+            const res = await fetch(`${API}/api/applications/apply`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -207,7 +208,7 @@ const JobDetails = ({ isClientView }) => {
 
     const handleUpdateProgress = async () => {
         try {
-            const res = await fetch(`http://localhost:8080/api/jobs/${id}/progress`, {
+            const res = await fetch(`${API}/api/jobs/${id}/progress`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -229,7 +230,7 @@ const JobDetails = ({ isClientView }) => {
     const handleMarkComplete = async () => {
         if (!window.confirm("Are you sure the project is complete? This will notify the client.")) return;
         try {
-            const res = await fetch(`http://localhost:8080/api/jobs/${id}/complete`, {
+            const res = await fetch(`${API}/api/jobs/${id}/complete`, {
                 method: 'POST'
             });
             const data = await res.json();
