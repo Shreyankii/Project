@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173") // Allow frontend access
+@CrossOrigin(origins = {"http://localhost:5173", "https://microhiree.netlify.app"})
+ // Allow frontend access
 public class AuthController {
 
     @Autowired
@@ -56,3 +57,4 @@ public class AuthController {
         return authService.login(request.getEmail(), request.getPassword());
     }
 }
+
